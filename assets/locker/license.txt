@@ -1,0 +1,11 @@
+Model Information:
+* title:	Wooden Locker
+* source:	https://sketchfab.com/3d-models/wooden-locker-31e5a3a2fedb4ffd9f06bf2f2fd86bee
+* author:	Shedmon (https://sketchfab.com/shedmon)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Wooden Locker" (https://sketchfab.com/3d-models/wooden-locker-31e5a3a2fedb4ffd9f06bf2f2fd86bee) by Shedmon (https://sketchfab.com/shedmon) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

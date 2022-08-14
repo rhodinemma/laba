@@ -40,12 +40,12 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
         title: const Text("Local / Web Objects"),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * .8,
+              height: MediaQuery.of(context).size.height * .85,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(22),
                 child: ARView(
