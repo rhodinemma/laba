@@ -1,4 +1,4 @@
-package com.example.arcore_example
+package com.example.laba
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, file_names, unused_local_variable
 
 import 'package:ar_flutter_plugin/managers/ar_location_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
@@ -84,9 +84,9 @@ class _ObjectsOnPlanesWidgetState extends State<ObjectsOnPlanesWidget> {
     /*nodes.forEach((node) {
       this.arObjectManager.removeNode(node);
     });*/
-    anchors.forEach((anchor) {
+    for (var anchor in anchors) {
       arAnchorManager.removeAnchor(anchor);
-    });
+    }
     anchors = [];
   }
 

@@ -1,10 +1,11 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, file_names, unused_import
 
 import 'package:ar_flutter_plugin/managers/ar_location_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
 import 'package:ar_flutter_plugin/models/ar_anchor.dart';
+import 'package:laba/views/finishShopping.dart';
 import 'package:flutter/material.dart';
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
 import 'package:ar_flutter_plugin/datatypes/config_planedetection.dart';
@@ -38,7 +39,7 @@ class _ObjectsOnPlanesWidgetState extends State<ObjectsOnPlanesWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Anchors & Objects on Planes'),
+          title: const Text('Try Product'),
         ),
         // ignore: avoid_unnecessary_containers
         body: Container(
@@ -50,13 +51,28 @@ class _ObjectsOnPlanesWidgetState extends State<ObjectsOnPlanesWidget> {
           Align(
             alignment: FractionalOffset.bottomCenter,
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: onRemoveEverything,
-                      child: const Text("Remove Everything")),
-                ]),
-          )
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Close View"),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: onRemoveEverything,
+                    child: const Text("Clear View"),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ])));
   }
 
@@ -85,9 +101,9 @@ class _ObjectsOnPlanesWidgetState extends State<ObjectsOnPlanesWidget> {
     /*nodes.forEach((node) {
       this.arObjectManager.removeNode(node);
     });*/
-    anchors.forEach((anchor) {
+    for (var anchor in anchors) {
       arAnchorManager.removeAnchor(anchor);
-    });
+    }
     anchors = [];
   }
 
