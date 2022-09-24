@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, unused_import
 import 'package:flutter/services.dart';
 import 'package:laba/constants.dart';
+import 'package:laba/views/details/components/body.dart';
 import 'package:laba/views/localAndWebObjectsView.dart';
 import 'package:laba/views/objectsOnPlanes.dart';
 import 'package:laba/views/product/productsScreen.dart';
@@ -32,7 +33,7 @@ class MyHomePage extends StatelessWidget {
             elevation: 5,
           ),
           icon: const Icon(
-            Icons.energy_savings_leaf,
+            Icons.arrow_forward,
             size: 50,
           ),
           label: const Text("Try a product"),
@@ -50,10 +51,16 @@ class MyHomePage extends StatelessWidget {
             text: 'Home',
             iconSize: 35,
           ),
-          const GButton(
-            icon: Icons.settings,
-            text: 'Settings',
+          GButton(
+            icon: Icons.lightbulb,
+            text: 'User Guide',
             iconSize: 35,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const UserGuide()),
+              );
+            },
           ),
           GButton(
             icon: Icons.exit_to_app,
@@ -65,6 +72,24 @@ class MyHomePage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class UserGuide extends StatelessWidget {
+  const UserGuide({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('User Guide')),
+      body: Center(
+          child: ElevatedButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: const Text('Go back!'),
+      )),
     );
   }
 }
