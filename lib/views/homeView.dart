@@ -62,12 +62,12 @@ class MyHomePage extends StatelessWidget {
           ),
           GButton(
             icon: Icons.lightbulb,
-            text: 'User Guide',
+            text: 'Feedback',
             iconSize: 35,
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Carousel()),
+                MaterialPageRoute(builder: (context) => const UserGuide()),
               );
             },
           ),
@@ -85,121 +85,156 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class UserGuide extends StatelessWidget {
+class UserGuide extends StatefulWidget {
   const UserGuide({Key? key}) : super(key: key);
+
+  @override
+  State<UserGuide> createState() => _UserGuideState();
+}
+
+class _UserGuideState extends State<UserGuide> {
+  // we have initialized active step to 0 so that
+  int _activeCurrentStep = 0;
+
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController pass = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController pincode = TextEditingController();
+
+  // Here we have created list of steps
+  List<Step> stepList() => [
+        // This is step1 which is called Account.
+        // Here we will fill our personal details
+        Step(
+          state:
+              _activeCurrentStep <= 0 ? StepState.editing : StepState.complete,
+          isActive: _activeCurrentStep >= 0,
+          title: const Text('Feedack Section 1'),
+          content: Column(
+            children: [
+              const SizedBox(
+                height: 8,
+              ),
+              TextField(
+                controller: name,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Did the application meet your expectations?',
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              TextField(
+                controller: email,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Will you use this feature before buying online?',
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              TextField(
+                controller: pass,
+                // obscureText: true,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Do you think adults of all ages can use this feature?',
+                ),
+              ),
+            ],
+          ),
+        ),
+        // This is Step2 here we will enter our address
+        Step(
+            state: _activeCurrentStep <= 1
+                ? StepState.editing
+                : StepState.complete,
+            isActive: _activeCurrentStep >= 1,
+            title: const Text('Feedback Section 2'),
+            content: Column(
+              children: [
+                const SizedBox(
+                  height: 8,
+                ),
+                TextField(
+                  controller: address,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Do you prefer buying online without this feature?',
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                TextField(
+                  controller: pincode,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Tell us any problems while using the feature?',
+                  ),
+                ),
+              ],
+            )),
+
+        // This is Step3 here we will display all the details
+        // that are entered by the user
+        Step(
+            state: StepState.complete,
+            isActive: _activeCurrentStep >= 2,
+            title: const Text('Submit'),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+            Text('Did the application meet your expectations? ${name.text}'),
+            Text('Will you use this feature before buying online? ${email.text}'),
+            Text('Do you think adults of all ages can use this feature? ${pass.text}'),
+            Text('Do you prefer buying online without this feature? ${address.text}'),
+            Text('Tell us any problems while using the feature? ${pincode.text}'),
+              ],
+            ))
+      ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('User Guide')),
-      body: Center(
-          child: ElevatedButton(
-        onPressed: () {
-          Navigator.pop(context);
+      appBar: AppBar(title: const Text('Feedback Section')),
+      // Here we have initialized the stepper widget
+      body: Stepper(
+        type: StepperType.vertical,
+        currentStep: _activeCurrentStep,
+        steps: stepList(),
+
+        // onStepContinue takes us to the next step
+        onStepContinue: () {
+          if (_activeCurrentStep < (stepList().length - 1)) {
+            setState(() {
+              _activeCurrentStep += 1;
+            });
+          }
         },
-        child: const Text('Go back!'),
-      )),
+
+        // onStepCancel takes us to the previous step
+        onStepCancel: () {
+          if (_activeCurrentStep == 0) {
+            return;
+          }
+
+          setState(() {
+            _activeCurrentStep -= 1;
+          });
+        },
+
+        // onStepTap allows to directly click on the particular step we want
+        onStepTapped: (int index) {
+          setState(() {
+            _activeCurrentStep = index;
+          });
+        },
+      ),
     );
   }
-}
-
-class Carousel extends StatefulWidget {
-  const Carousel({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<Carousel> createState() => _CarouselState();
-}
-
-class _CarouselState extends State<Carousel> {
-  late PageController _pageController;
-
-  List<String> images = [
-    "https://images.wallpapersden.com/image/download/purple-sunrise-4k-vaporwave_bGplZmiUmZqaraWkpJRmbmdlrWZlbWU.jpg",
-    "https://wallpaperaccess.com/full/2637581.jpg",
-    "https://uhdwallpapers.org/uploads/converted/20/01/14/the-mandalorian-5k-1920x1080_477555-mm-90.jpg"
-  ];
-
-  int activePage = 1;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(viewportFraction: 0.8, initialPage: 1);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: 200,
-          child: PageView.builder(
-              itemCount: images.length,
-              pageSnapping: true,
-              controller: _pageController,
-              onPageChanged: (page) {
-                setState(() {
-                  activePage = page;
-                });
-              },
-              itemBuilder: (context, pagePosition) {
-                bool active = pagePosition == activePage;
-                return slider(images, pagePosition, active);
-              }),
-        ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: indicators(images.length, activePage))
-      ],
-    );
-  }
-}
-
-AnimatedContainer slider(images, pagePosition, active) {
-  double margin = active ? 10 : 20;
-
-  return AnimatedContainer(
-    duration: const Duration(milliseconds: 500),
-    curve: Curves.easeInOutCubic,
-    margin: EdgeInsets.all(margin),
-    decoration: BoxDecoration(
-        image: DecorationImage(image: NetworkImage(images[pagePosition]))),
-  );
-}
-
-imageAnimation(PageController animation, images, pagePosition) {
-  return AnimatedBuilder(
-    animation: animation,
-    builder: (context, widget) {
-      if (kDebugMode) {
-        print(pagePosition);
-      }
-
-      return SizedBox(
-        width: 200,
-        height: 200,
-        child: widget,
-      );
-    },
-    child: Container(
-      margin: const EdgeInsets.all(10),
-      child: Image.network(images[pagePosition]),
-    ),
-  );
-}
-
-List<Widget> indicators(imagesLength, currentIndex) {
-  return List<Widget>.generate(imagesLength, (index) {
-    return Container(
-      margin: const EdgeInsets.all(3),
-      width: 10,
-      height: 10,
-      decoration: BoxDecoration(
-          color: currentIndex == index ? Colors.black : Colors.black26,
-          shape: BoxShape.circle),
-    );
-  });
 }

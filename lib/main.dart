@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme:
             ColorScheme.fromSwatch().copyWith(secondary: kPrimaryColor),
       ),
-      home: const MyHomePage(title: 'Augmented Reality Gateway'),
+      home: const MyHomePage(title: 'Augmented Reality Feature'),
     );
   }
 }
